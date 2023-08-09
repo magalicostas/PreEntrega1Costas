@@ -1,22 +1,69 @@
-let adopted = false;
-let name = requestAnswer("Ingresa tu nombre completo.");
+let galgos = [];
 
-let adopt = requestAnswer(
-  "Hola " + name + " ¿Estás interesado en adoptar un galgo?"
-);
+while (true) {
+  const answer = requestAnswer(
+    "Seleccione una opción:\n1) Agregar galgo al listado\n2) Listar galgos\n3) Eliminar galgo del listado\n4) Buscar galgos por atributo"
+  );
 
-if (adopt) {
-  while (adopt.toLowerCase() === "si") {
-    adopted = haveDogToAdopt();
-
-    if (adopted === false) {
-      adopt = prompt("¿Deseas volver a completar el formulario?");
-    }
+  switch (answer) {
+    case "1":
+      const galgo = createGalgo();
+      galgos.push(galgo);
+      break;
+    case "2":
+      if (galgos.length > 0) {
+        listGalgos(galgos);
+      } else {
+        alert("Aún no se han agregado galgos al listado!");
+      }
+      break;
+    case "3":
+      const name = requestAnswer("Ingrese el nombre del galgo a eliminar:");
+      removeGalgo(name);
+      break;
+    case "4":
+      const attribute = requestAnswer("Ingrese el atributo de busqueda:");
+      const filteredGalgos = galgos.filter((galgo) =>
+        galgo.attributes.includes(attribute)
+      );
+      listGalgos(filteredGalgos);
+      break;
+    default:
+      alert("Opción inválida, por favor vuelva a intentarlo!");
+      break;
   }
 }
-if (adopted === false) {
+
+function createGalgo() {
+  let galgo = {
+    name: "",
+    attributes: [],
+  };
+  galgo.name = requestAnswer("Ingrese el nombre del galgo:");
+  let attribute = requestAnswer("Ingrese un atributo:");
+  while (attribute !== "0") {
+    galgo.attributes.push(attribute);
+    attribute = requestAnswer(
+      "Ingrese otro atributo o el número'0' para finalizar:"
+    );
+  }
+  return galgo;
+}
+
+function removeGalgo(name) {
+  if (galgos.some((galgo) => galgo.name === name)) {
+    galgos = galgos.filter((galgo) => galgo.name !== name);
+    alert("El galgo se elimino del listado con exito");
+  } else {
+    alert("No existe ningun galgo con el nombre ingresado");
+  }
+}
+
+function listGalgos(galgos) {
   alert(
-    "Vuelve a completar el formulario cuando quieras un compañero de 4 patas."
+    galgos
+      .map((galgo) => `${galgo.name}: ${galgo.attributes.join(", ")}`)
+      .join("\n")
   );
 }
 
@@ -26,34 +73,4 @@ function requestAnswer(question) {
     answer = prompt(question);
   }
   return answer;
-}
-
-function haveDogToAdopt() {
-  let ageDog = prompt(
-    "¿Estas interesado/a en un galgo cachorro, joven adulto o adulto?"
-  );
-
-  switch (ageDog.toLowerCase()) {
-    case "cachorro":
-      let castration = prompt("¿Adoptarias con compromiso de castración?");
-      if (castration === "si") {
-        let email = requestAnswer("Ingresa un email.");
-        alert("Te enviaremos mas información a " + email + ".");
-        return true;
-      } else {
-        alert("No permitimos adoptar galgos sin compromiso de castración.");
-        return false;
-      }
-    case "joven adulto":
-    case "adulto":
-      alert(
-        "No tenemos ningún galgo con estas características en este momento."
-      );
-      return false;
-    default:
-      alert(
-        "La opción ingresada no es válida. Debe ingresar una opción entre cachorro, joven adulto o adulto."
-      );
-      return false;
-  }
 }
