@@ -1,76 +1,88 @@
-let galgos = [];
+let greyhounds = JSON.parse(localStorage.getItem('greyhounds'))
 
-while (true) {
-  const answer = requestAnswer(
-    "Seleccione una opción:\n1) Agregar galgo al listado\n2) Listar galgos\n3) Eliminar galgo del listado\n4) Buscar galgos por atributo"
-  );
-
-  switch (answer) {
-    case "1":
-      const galgo = createGalgo();
-      galgos.push(galgo);
-      break;
-    case "2":
-      if (galgos.length > 0) {
-        listGalgos(galgos);
-      } else {
-        alert("Aún no se han agregado galgos al listado!");
-      }
-      break;
-    case "3":
-      const name = requestAnswer("Ingrese el nombre del galgo a eliminar:");
-      removeGalgo(name);
-      break;
-    case "4":
-      const attribute = requestAnswer("Ingrese el atributo de busqueda:");
-      const filteredGalgos = galgos.filter((galgo) =>
-        galgo.attributes.includes(attribute)
-      );
-      listGalgos(filteredGalgos);
-      break;
-    default:
-      alert("Opción inválida, por favor vuelva a intentarlo!");
-      break;
-  }
+if (greyhounds) {
+  greyhounds.forEach(greyhound => {
+    createGreyhoundCard(greyhound)
+  })
+} else {
+  greyhounds = []
 }
 
-function createGalgo() {
-  let galgo = {
-    name: "",
-    attributes: [],
-  };
-  galgo.name = requestAnswer("Ingrese el nombre del galgo:");
-  let attribute = requestAnswer("Ingrese un atributo:");
-  while (attribute !== "0") {
-    galgo.attributes.push(attribute);
-    attribute = requestAnswer(
-      "Ingrese otro atributo o el número'0' para finalizar:"
-    );
-  }
-  return galgo;
-}
+document.getElementById('btn-create').addEventListener('click', submitForm)
 
-function removeGalgo(name) {
-  if (galgos.some((galgo) => galgo.name === name)) {
-    galgos = galgos.filter((galgo) => galgo.name !== name);
-    alert("El galgo se elimino del listado con exito");
-  } else {
-    alert("No existe ningun galgo con el nombre ingresado");
+// Alerts related functions
+function clearAlert() {
+  const alert = document.getElementById('alert');
+  if (alert) {
+    alert.remove()
   }
 }
-
-function listGalgos(galgos) {
-  alert(
-    galgos
-      .map((galgo) => `${galgo.name}: ${galgo.attributes.join(", ")}`)
-      .join("\n")
-  );
+function createAlert(alert) {
+  const alertWrapper = document.createElement('div')
+  alertWrapper.id = 'alert'
+  alertWrapper.className = 'alert alert-danger alert-dismissible mt-2'
+  alertWrapper.setAttribute('role', 'alert')
+  alertWrapper.innerHTML = `<div>${alert}</div>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>`
+  document.getElementById('form-container').appendChild(alertWrapper)
 }
 
-function requestAnswer(question) {
-  let answer = prompt(question);
-  while (answer === "") {
-    answer = prompt(question);
+// Validate that greyhound form has valid fields
+function validateGreyhoundForm(greyhound) {
+  clearAlert();
+  if (!greyhound.name) {
+    createAlert("Debe completar el campo nombre.")
+    return false
   }
-  return answer;
+  if (greyhounds.some(g => g.name.toLowerCase() === greyhound.name.toLowerCase())) {
+    createAlert("Ya existe un galgo con ese nombre.")
+    return false
+  }
+
+  if (!greyhound.attributes) {
+    createAlert("Debe completar el campo atributos.")
+    return false
+  }
+  return true
+}
+
+// Create greyhound card and append to list container
+function createGreyhoundCard(greyhound) {
+  const cardWrapper = document.createElement('div')
+  cardWrapper.className = 'col-md-3 mb-4'
+  cardWrapper.innerHTML = `<div class="card">
+      <div class="card-body">
+        <h5 class="card-title">${greyhound.name}</h5>
+        <p class="card-text">${greyhound.attributes}</p>
+      </div>
+    </div>`
+  document.getElementById('list-container').appendChild(cardWrapper)
+}
+
+// Add greyhound and persist over local storage
+function addGreyhound(greyhound) {
+  greyhounds.push(greyhound);
+  localStorage.setItem('greyhounds', JSON.stringify(greyhounds))
+}
+
+// Submit greyhound form
+function submitForm() {
+  const nameInput = document.getElementById('input-name')
+  const attributesInput = document.getElementById('input-attributes')
+  let greyhound = {
+    name: nameInput.value,
+    attributes: attributesInput.value,
+  }
+  // Validate if greyhound name and attributes are completed
+  if (validateGreyhoundForm(greyhound)) {
+    // Persist greyhound on local storage
+    addGreyhound(greyhound)
+
+    // Create greyhound card
+    createGreyhoundCard(greyhound)
+
+    // Reset form values
+    nameInput.value = ''
+    attributesInput.value = ''
+  }
 }
