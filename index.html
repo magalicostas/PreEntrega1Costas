@@ -1,57 +1,50 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>PreEntrega 2</title>
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"
-      crossorigin="anonymous"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
-    />
-  </head>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Registro de perros</title>
+  <meta name="description" content="sitio online sobre refugio de animales" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous" />
+  <link href="
+    https://cdn.jsdelivr.net/npm/sweetalert2@11.7.28/dist/sweetalert2.min.css
+    " rel="stylesheet">
+</head>
 
-  <body>
-    <div id="form-container" class="container mt-5">
-      <h1>Agregar galgo</h1>
-      <div class="mb-2">
-        <label for="input-name" class="form-label">Nombre</label>
-        <input
-          type="text"
-          class="form-control"
-          id="input-name"
-          placeholder="Ingrese el nombre"
-        />
-      </div>
-      <div class="mb-2">
-        <label for="input-attributes" class="form-label">Atributos</label>
-        <input
-          type="text"
-          class="form-control"
-          id="input-attributes"
-          placeholder="Ingrese los atributos"
-        />
-      </div>
-      <button id="btn-create" class="btn btn-primary">Agregar</button>
+<body>
+  <div id="form-container" class="container mt-5">
+    <div class="">
+      <h1>¿Cómo se vería tu perro?</h1>
+      <h4>Ingresa el nombre, los atributos y te mostraremos como se vería!</h4>
     </div>
-
-    <div class="container mt-5">
-      <h1>Listado de Galgos</h1>
-      <div id="list-container" class="row"></div>
+    <div class="mb-2">
+      <label for="input-name" class="form-label">Nombre</label>
+      <input type="text" class="form-control" id="input-name" placeholder="Ingrese el nombre">
     </div>
+    <div class="mb-2">
+      <label for="input-attributes" class="form-label">Atributos</label>
+      <input type="text" class="form-control" id="input-attributes" placeholder="Ingrese los atributos">
+    </div>
+    <button id="btn-create" class="btn btn-primary">Generar</button>
+  </div>
 
-    <!-- Scripts -->
-    <script src="main.js"></script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
-      crossorigin="anonymous"
-    ></script>
-  </body>
+  <div class="container mt-5">
+    <h4>Perros:</h4>
+    <div id="list-container" class="row">
+    </div>
+  </div>
+
+
+  <!-- Scripts -->
+  <script src="main.js"></script>
+  <script src="
+https://cdn.jsdelivr.net/npm/sweetalert2@11.7.28/dist/sweetalert2.all.min.js
+"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+    crossorigin="anonymous"></script>
+</body>
+
 </html>

@@ -1,3 +1,3 @@
-# PreEntrega3Costas
+# ProyectoFinalCostas
 
-#### [Live demo](https://magalicostas.github.io/PreEntrega3Costas/)
+#### [Live demo](https://magalicostas.github.io/ProyectoFinalCostas/)
